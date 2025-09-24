@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Victoria Viva - Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#e8f5e9; margin:0; padding:20px; }
+    .chatbox { max-width:600px; margin:0 auto; background:#f1f8e9; padding:16px; border-radius:8px; border:1px solid #a5d6a7; }
+    #chat-log { height:300px; overflow:auto; background:white; border-radius:6px; padding:10px; border:1px solid #ccc; margin-bottom:10px;}
+    .btn { margin:6px; padding:10px 14px; background:#388e3c; color:white; border:none; border-radius:6px; cursor:pointer; }
+    .btn:hover { background:#2e7d32; }
+    .input-area { display:flex; margin-top:10px; }
+    .input-area input { flex:1; padding:10px; border:1px solid #ccc; border-radius:6px; }
+    .input-area button { margin-left:8px; padding:10px 14px; background:#388e3c; color:white; border:none; border-radius:6px; cursor:pointer; }
+    .input-area button:hover { background:#2e7d32; }
+  </style>
+</head>
+<body>
+  <h1>Victoria Viva — Chatbot</h1>
+  <div class="chatbox">
+    <div id="chat-log"></div>
+
+    <!-- Botones de preguntas predeterminadas -->
+    <div style="text-align:center;">
+      <button class="btn" onclick="ask('hola')">👋 Hola</button>
+      <button class="btn" onclick="ask('lugares turísticos')">🏞️ Lugares</button>
+      <button class="btn" onclick="ask('restaurantes recomendados')">🍽️ Restaurantes</button>
+      <button class="btn" onclick="ask('aves y biodiversidad')">🦜 Aves</button>
+      <button class="btn" onclick="ask('adios')">👋 Adiós</button>
+      <button class="btn" onclick="clearChat()">🗑️ Borrar chat</button>
+    </div>
+
+    <!-- Entrada de texto libre -->
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí..." onkeypress="if(event.key === 'Enter') sendMessage()" />
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:3000";
+
+    function appendLog(speaker, text) {
+      const log = document.getElementById("chat-log");
+      log.innerHTML += `<p><strong>${speaker}:</strong> ${text}</p>`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function ask(option) {
+      appendLog("Tú", option);
+      appendLog("IA", "Escribiendo...");
+
+      try {
+        const res = await fetch(API_BASE + "/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: option })
+        });
+
+        const data = await res.json();
+
+        const log = document.getElementById("chat-log");
+        log.lastElementChild.innerHTML = `<strong>IA:</strong> ${data.reply}`;
+      } catch (err) {
+        console.error(err);
+        appendLog("IA", "❌ Error al conectar con el servidor.");
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value.trim();
+      if (message) {
+        ask(message);
+        input.value = "";
+      }
+    }
+
+    function clearChat() {
+      document.getElementById("chat-log").innerHTML = "";
+    }
+  </script>
+</body>
+</html>

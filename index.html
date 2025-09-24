@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victoria Viva - Guía Turística</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, #388e3c, #4caf50);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            background-color: #c8e6c9;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background-color: #a5d6a7;
+            transform: translateY(-2px);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #f1f8e9;
+        }
+        
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #388e3c;
+        }
+        
+        /* CONTENEDOR DE OPCIONES PRINCIPALES */
+        .options-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .option-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            width: 300px;   /* ancho fijo */
+            cursor: pointer;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .main-card-image {
+            height: 180px;
+            background-color: #c8e6c9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .main-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .option-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #388e3c;
+        }
+        
+        .option-card p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #388e3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2e7d32;
+        }
+        
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        section.active {
+            display: block;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #388e3c;
+            font-size: 2rem;
+        }
+        
+        .places-grid, .biodiversity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .place-card, .species-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-color: #c8e6c9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 10px;
+            color: #388e3c;
+        }
+        
+        .chatbox {
+            background-color: #f1f8e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        #chat-log {
+            height: 300px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .btn-container {
+            text-align: center;
+        }
+        
+        .option-btn {
+            margin: 5px;
+            padding: 10px 15px;
+            background: #388e3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .option-btn:hover {
+            background: #2e7d32;
+        }
+        
+        footer {
+            background-color: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: #a5d6a7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Victoria Viva</h1>
+        <p>¡TU GUÍA TURÍSTICA INTELIGENTE EN EL MUNICIPIO DE VICTORIA, CALDAS!</p>
+    </header>
+    
+    <nav>
+        <a href="#" onclick="showSection('home')">Inicio</a>
+        <a href="#" onclick="showSection('lugares')">Lugares turísticos</a>
+        <a href="#" onclick="showSection('biodiversidad')">Biodiversidad</a>
+        <a href="#" onclick="showSection('chatbot')">ChatBot Interactivo</a>
+    </nav>
+    
+    <!-- Sección de Inicio -->
+    <section id="home" class="active">
+        <div class="hero">
+            <h2>Descubre la belleza de Victoria, Caldas</h2>
+            <div class="options-container">
+                <div class="option-card" onclick="showSection('lugares')">
+                    <div class="main-card-image">
+                        <img src="lugares.jpeg" alt="Lugares turísticos de Victoria">
+                    </div>
+                    <h3>Lugares turísticos</h3>
+                    <p>Explora los sitios más emblemáticos y hermosos de Victoria</p>
+                    <a href="#" class="btn" onclick="showSection('lugares')">Ver lugares</a>
+                </div>
+                
+                <div class="option-card" onclick="showSection('biodiversidad')">
+                    <div class="main-card-image">
+                        <img src="biodiversidad.jpeg" alt="Biodiversidad de Victoria">
+                    </div>
+                    <h3>Biodiversidad</h3>
+                    <p>Conoce la rica flora y fauna de esta región colombiana</p>
+                    <a href="#" class="btn" onclick="showSection('biodiversidad')">Explorar biodiversidad</a>
+                </div>
+                
+                <div class="option-card">
+                    <div class="main-card-image">
+                        <img src="chatbot.webp" alt="ChatBot Interactivo">
+                    </div>
+                    <h3>ChatBot Interactivo</h3>
+                    <p>Haz preguntas y obtén información personalizada</p>
+                    <a href="chatbot.html" class="btn">Chatear ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Lugares Turísticos -->
+    <section id="lugares">
+        <h2 class="section-title">Lugares Turísticos de Victoria</h2>
+        <div class="places-grid">
+            <div class="place-card">
+                <div class="card-image">
+                    <img src="parque.jpg" alt="Cascada La María">
+                </div>
+                <div class="card-content">
+                    <h3>Parque La Ceiba</h3>
+                    <p>El Parque La Ceiba es el centro del municipio y lleva su nombre por la gran ceiba centenaria que lo adorna. Es un lugar de encuentro rodeado de zonas verdes, senderos y una fuente, reconocido como símbolo natural y cultural de Victoria.</p>
+                </div>
+            </div>
+            
+            <div class="place-card">
+                <div class="card-image">
+                    <img src="rio.jpg" alt="Sendero Ecológico El Cajón">
+                </div>
+                <div class="card-content">
+                    <h3>Río Guarinó</h3>
+                    <p>El Río Guarinó atraviesa el municipio de Victoria y es uno de sus principales recursos naturales. Sus aguas caudalosas rodeadas de selva lo convierten en un atractivo para el ecoturismo y un símbolo de la riqueza hídrica de la región.</p>
+                </div>
+            </div>
+            
+            <div class="place-card">
+                <div class="card-image">
+                    <img src="balneario.jpg" alt="Reserva Cuchilla de Bellavista">
+                </div>
+                <div class="card-content">
+                    <h3>Balneario de Doña Juana</h3>
+                    <p>Es un lugar turístico muy visitado por sus aguas limpias y frescas. Es ideal para pasar un día en familia, disfrutar de la naturaleza y de la gastronomía tradicional de la región.</p>
+                </div>
+            </div>
+
+            <div class="place-card">
+                <div class="card-image">
+                    <img src="templo.jpg" alt="Reserva Cuchilla de Bellavista">
+                </div>
+                <div class="card-content">
+                    <h3>Templo Nuestra Señora del Carmen</h3>
+                    <p>es uno de los principales símbolos religiosos y culturales del municipio. Su arquitectura tradicional y su torre campanario lo convierten en un punto de encuentro para la comunidad y en un lugar muy visitado por feligreses y turistas.</p>
+                </div>
+            </div>
+
+            <div class="place-card">
+                <div class="card-image">
+                    <img src="mirador.jpg" alt="Reserva Cuchilla de Bellavista">
+                </div>
+                <div class="card-content">
+                    <h3>Avistamiento de Aves</h3>
+                    <p>Es una de las actividades turísticas más destacadas gracias a su riqueza natural. La zona cuenta con bosques y ríos que sirven de hábitat para numerosas especies, lo que atrae a observadores y amantes de la naturaleza que disfrutan de la biodiversidad en un entorno tranquilo y acogedor.</p>
+                </div>
+            </div>
+
+        </div>
+        <div style="text-align: center;">
+            <a href="#" class="back-btn" onclick="showSection('home')">Volver al Inicio</a>
+        </div>
+    </section>
+    
+    <!-- Sección de Biodiversidad -->
+    <section id="biodiversidad">
+        <h2 class="section-title">Biodiversidad de Victoria</h2>
+        <div class="biodiversity-grid">
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="caballos.jpg" alt="Guacamayas">
+                </div>
+                <div class="card-content">
+                    <h3>Caballos</h3>
+                    <p>Animales domésticos muy usados en el campo para transporte y trabajo. También son símbolo de fuerza y nobleza.</p>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="chiguiro.jpg" alt="Tucanes">
+                </div>
+                <div class="card-content">
+                    <h3>Chiguiro</h3>
+                    <p>El roedor más grande del mundo, vive cerca de ríos y lagunas, es pacífico y se mueve en grupos.</p>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="chulo.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Chulo (Gallinazo)</h3>
+                    <p>Ave carroñera que cumple un papel importante limpiando la naturaleza al alimentarse de animales muertos.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="garza.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Garza</h3>
+                    <p>Ave elegante de plumaje blanco que habita en humedales y riberas de ríos, conocida por su vuelo lento.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="loro.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Loro</h3>
+                    <p>Ave colorida e inteligente, famosa por su capacidad de imitar sonidos y su papel en la selva como dispersor de semillas.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="mico.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Mico</h3>
+                    <p>Mamífero trepador que vive en los árboles, se desplaza en grupos y es muy ágil para buscar frutas y hojas.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="peces.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Peces</h3>
+                    <p>Habitantes de ríos y quebradas, esenciales para el equilibrio del ecosistema y fuente de alimento para la comunidad.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="saino.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Saino</h3>
+                    <p>Mamífero similar al cerdo, vive en manadas y se alimenta de frutos, raíces y pequeños animales.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="tigre.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Tigre</h3>
+                    <p>Gran felino de manchas o rayas, depredador importante en la cadena alimenticia, símbolo de poder y agilidad.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="vacas.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Vaca</h3>
+                    <p>Animales domésticos criados para la producción de leche, carne y cuero, fundamentales en la economía.</p>
+                </div>
+            </div>
+
+            <div class="species-card">
+                <div class="card-image">
+                    <img src="venado.jpg" alt="Orquídeas">
+                </div>
+                <div class="card-content">
+                    <h3>Venado</h3>
+                    <p>Mamífero de gran agilidad, herbívoro y muy atento a los depredadores; su figura es símbolo de elegancia en la fauna silvestre.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="#" class="back-btn" onclick="showSection('home')">Volver al Inicio</a>
+        </div>
+    </section>
+    
+    <!-- Sección del ChatBot -->
+    <div style="text-align: center; margin: 40px 0;">
+        <a href="chatbot.html" class="btn">Ir al ChatBot Interactivo</a>
+    </div>
+
+    <footer>
+        <p>Proyecto educativo de grado 11 - Victoria Viva</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
